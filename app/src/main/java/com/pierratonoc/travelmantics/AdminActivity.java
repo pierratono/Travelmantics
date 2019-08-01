@@ -25,19 +25,16 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+        FirebaseUtil.openFbReference("traveldeals");
 
         //Initialize Firebase Database
-
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("traveldeals");
+        mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
+        mDatabaseReference = FirebaseUtil.mDatabaseReference;
 
         //EditText
-
         txtTitle = (EditText)findViewById(R.id.txtTitle);
         txtDescription = (EditText)findViewById(R.id.txtDescription);
         txtPrice = (EditText)findViewById(R.id.txtPrice);
-
-
     }
 
     @Override
@@ -51,9 +48,7 @@ public class AdminActivity extends AppCompatActivity {
                 default:
                     return super.onOptionsItemSelected(item);
         }
-
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -62,13 +57,13 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void saveDeal() {
+
         String title = txtTitle.getText().toString();
         String description = txtDescription.getText().toString();
         String price = txtPrice.getText().toString();
 
         TravelDeal deal = new TravelDeal(title,description,price,"");
         mDatabaseReference.push().setValue(deal);
-
     }
 
     private void clean() {
