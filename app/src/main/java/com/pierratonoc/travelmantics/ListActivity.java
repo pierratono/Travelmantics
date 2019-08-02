@@ -10,11 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,12 +38,6 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        RecyclerView rvDeals = (RecyclerView)findViewById(R.id.rvDeals);
-        final DealAdapter adapter = new DealAdapter();
-        rvDeals.setAdapter(adapter);
-        @SuppressLint("WrongConstant") LinearLayoutManager dealsLayoutManager =
-                new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-        rvDeals.setLayoutManager(dealsLayoutManager);
 
     }
 
@@ -57,7 +55,36 @@ public class ListActivity extends AppCompatActivity {
                 Intent intent = new Intent(this,AdminActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.logout_menu:
+                AuthUI.getInstance()
+                        .signOut(this)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Log.d("Logout","User Logged out");
+                                FirebaseUtil.attachListener();
+                            }
+                        });
+                FirebaseUtil.deattachListener();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FirebaseUtil.deattachListener();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FirebaseUtil.openFbReference("traveldeals",this);
+        RecyclerView rvDeals = (RecyclerView)findViewById(R.id.rvDeals);
+        final DealAdapter adapter = new DealAdapter();
+        rvDeals.setAdapter(adapter);
+        @SuppressLint("WrongConstant") LinearLayoutManager dealsLayoutManager =
+                new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        rvDeals.setLayoutManager(dealsLayoutManager);
+        FirebaseUtil.attachListener();
     }
 }

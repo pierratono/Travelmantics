@@ -27,7 +27,7 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        FirebaseUtil.openFbReference("traveldeals");
+        FirebaseUtil.openFbReference("traveldeals",this);
 
         //Initialize Firebase Database
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
