@@ -37,14 +37,18 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.list_activity_menu,menu);
+        MenuItem insertMenu = menu.findItem(R.id.insert_menu);
+        if(FirebaseUtil.isAdmin == true){
+            insertMenu.setVisible(true);
+        }else {
+            menu.findItem(R.id.insert_menu).setVisible(false);
+        }
         return true;
     }
 
@@ -68,7 +72,6 @@ public class ListActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -86,5 +89,9 @@ public class ListActivity extends AppCompatActivity {
                 new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         rvDeals.setLayoutManager(dealsLayoutManager);
         FirebaseUtil.attachListener();
+    }
+
+    public void showMenu(){
+        invalidateOptionsMenu();
     }
 }
