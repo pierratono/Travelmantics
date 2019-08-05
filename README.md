@@ -1,8 +1,15 @@
 # Travelmantics-Pierratono
 This challenge is an Android Application called Travelmantics.
-# Authentication Methods 
-    Email
-    Google Account
+# Features
+    Authentication Methods
+        Email
+        Google Account
+    Database
+        Firebase Realtime Database
+    Storage
+        Firebase Storage
+    Migration
+        AndroidX
 # Screenshots
 those are some Screenshots of the project running on *Techno W4*
 ![alc4.0](/Screenshots/Home.png)
