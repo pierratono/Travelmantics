@@ -68,21 +68,21 @@ public class ListActivity extends AppCompatActivity {
                                 FirebaseUtil.attachListener();
                             }
                         });
-                FirebaseUtil.deattachListener();
+                FirebaseUtil.detachListener();
         }
         return super.onOptionsItemSelected(item);
     }
     @Override
     protected void onPause() {
         super.onPause();
-        FirebaseUtil.deattachListener();
+        FirebaseUtil.detachListener();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         FirebaseUtil.openFbReference("traveldeals",this);
-        RecyclerView rvDeals = (RecyclerView)findViewById(R.id.rvDeals);
+        RecyclerView rvDeals = findViewById(R.id.rvDeals);
         final DealAdapter adapter = new DealAdapter();
         rvDeals.setAdapter(adapter);
         @SuppressLint("WrongConstant") LinearLayoutManager dealsLayoutManager =
