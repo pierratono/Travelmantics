@@ -1,4 +1,4 @@
-# Travelmantics-Pierratono
+# Travelmantics App
 This challenge is an Android Application called Travelmantics.
 # Features
     Authentication Methods
